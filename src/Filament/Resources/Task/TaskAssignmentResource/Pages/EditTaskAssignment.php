@@ -2,18 +2,13 @@
 
 namespace Dpb\Package\TaskMS\UI\Filament\Resources\Task\TaskAssignmentResource\Pages;
 
-use Dpb\Package\TaskMS\Commands\Task\UpdateTaskCommand;
-use Dpb\Package\TaskMS\Commands\TaskAssignment\TaskCommand;
-use Dpb\Package\TaskMS\Commands\TaskAssignment\UpdateTaskAssignmentCommand;
 use Dpb\Package\TaskMS\UI\Filament\Resources\Task\TaskAssignmentResource;
-use Dpb\Package\TaskMS\Handlers\Task\UpdateTaskHandler;
-use Dpb\Package\TaskMS\Handlers\TaskAssignment\UpdateTaskAssignmentHandler;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Dpb\Package\TaskMS\States;
-use Illuminate\Support\Facades\DB;
+use Dpb\Package\TaskMS\UI\Mappers\Task\TaskUpdateFormMapper;
+use Dpb\Package\TaskMS\Workflows\UpdateTaskWorkflow;
 
 class EditTaskAssignment extends EditRecord
 {
@@ -49,33 +44,10 @@ class EditTaskAssignment extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        return DB::transaction(function () use ($record, $data) {
-            // update task
-            $taskData = $data['task'];
-            $task = app(UpdateTaskHandler::class)->handle(
-                new UpdateTaskCommand(
-                    $record->task->id,
-                    new \DateTimeImmutable($taskData['date']),
-                    null,
-                    $taskData['description'] ?? null,
-                    $taskData['group_id'],
-                    States\Task\Task\Created::$name,
-                )
-            );
-
-            // update task assignment
-            return app(UpdateTaskAssignmentHandler::class)->handle(
-                new UpdateTaskAssignmentCommand(
-                    $record->id,
-                    $task->id,
-                    $data['subject_id'],
-                    'vehicle',
-                    null,
-                    null,
-                    $data['assigned_to_id'] ?? null,
-                    isset($data['assigned_to_id']) ? 'maintenance-group' : null
-                )
-            );
-        });
+        $commands = app(TaskUpdateFormMapper::class)->fromForm($record, $data);
+        return app(UpdateTaskWorkflow::class)->handle(
+            $commands['taskCommand'],
+            $commands['taskAssignmentCommand'],
+        );          
     }
 }

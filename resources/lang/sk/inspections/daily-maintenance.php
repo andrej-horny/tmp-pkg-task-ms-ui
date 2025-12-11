@@ -27,7 +27,7 @@ return [
         'empty_state_heading' => 'Žiadne denné ošetrenie na zobrazenie',
         'columns' => [
             'date' => 'Dátum',
-            'subject' => 'Vozidlá',
+            'subject' => 'Vozidlo',
             'template' => 'Typ ošetrenia',
             'state' => 'Stav',
             'note' => 'Poznámka',

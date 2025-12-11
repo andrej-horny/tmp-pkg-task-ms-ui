@@ -1,6 +1,6 @@
 <?php
 
-namespace Dpb\Package\TaskMS\Providers;
+namespace Dpb\Package\TaskMS\UI\Providers;
 
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -9,8 +9,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\NavigationItem;
-use Filament\Pages;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -19,7 +17,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 // resources
-use Dpb\Package\TaskMS\Filament\Resources;
+use Dpb\Package\TaskMS\UI\Filament\Resources;
 
 class TaskMSFilamentPanelProvider extends PanelProvider
 {

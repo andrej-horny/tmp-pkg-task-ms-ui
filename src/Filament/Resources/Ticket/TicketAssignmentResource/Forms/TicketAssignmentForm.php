@@ -44,12 +44,14 @@ class TicketAssignmentForm
                 )
                 ->getOptionLabelFromRecordUsing(null)
                 ->getSearchResultsUsing(null)
+                ->required()
                 ->preload()
                 ->searchable(),
             // ->disabled(fn($record) => $record->source_id == TicketSource::byCode('planned-maintenance')->first()->id)
             // ->required(false),
             // ticket type
-            TicketTypePicker::make('type_id'),
+            TicketTypePicker::make('type_id')
+                ->required(),
             // description
             Forms\Components\Textarea::make('description')
                 ->label(__('tms-ui::tickets/ticket.form.fields.description'))

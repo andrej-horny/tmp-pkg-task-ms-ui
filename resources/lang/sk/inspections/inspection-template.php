@@ -46,7 +46,10 @@ return [
                 'label' => 'Predmety kontroly',
                 'hint' => 'Modely vozidiel, ktorých sa týka tento typ kontroly'
             ],
-            'vehicle_models' => 'Modely vozidiel',
+            'vehicle_models' => [
+                'label' => 'Modely vozidiel',
+                'hint' => 'Modely vozidiel, ktorých s týka daný typ kontroly.'
+            ],
             'task_item_groups' => 'Typy podzákazok',
         ],
         'tabs' => [

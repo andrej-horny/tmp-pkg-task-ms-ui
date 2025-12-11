@@ -2,16 +2,10 @@
 
 namespace Dpb\Package\TaskMS\UI\Filament\Resources\Task\TaskItemResource\Tables;
 
-use Dpb\Package\TaskMS\Models\ActivityAssignment;
 use Dpb\Package\TaskMS\Models\TaskAssignment;
 use Dpb\Package\TaskMS\Models\TaskItemAssignment;
-use Dpb\Package\TaskMS\Models\WorkAssignment;
-use Dpb\Package\TaskMS\Services\TaskItemRepository;
-use Dpb\Package\TaskMS\Services\UpdateTaskItemAssignmentService;
-use Dpb\Package\TaskMS\Services\UpdateTaskItemWorkflowService;
+use Dpb\Package\TaskMS\Workflows\UpdateTaskItemWorkflow;
 use Filament\Support\Enums\MaxWidth;
-use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\EditAction as TablesEditAction;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,7 +32,7 @@ class EditAction
                 // dd($data);
                 return $data;
             })
-            ->using(function (Model $record, array $data, UpdateTaskItemWorkflowService $svc ): ?Model {
+            ->using(function (Model $record, array $data, UpdateTaskItemWorkflow $svc ): ?Model {
                 // dd($data);
                 return $svc->execute($record->id, $record->task->id, $data);
             });

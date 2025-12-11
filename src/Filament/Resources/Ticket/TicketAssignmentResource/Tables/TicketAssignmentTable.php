@@ -62,8 +62,6 @@ class TicketAssignmentTable
                         return $data;
                     }),
                 Tables\Actions\DeleteAction::make(),
-                // CreateTaskAction::make('create_task'),
-                // CreateTaskAction::make('create_task'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

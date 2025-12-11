@@ -7,7 +7,7 @@ use Dpb\Package\TaskMS\Models\TicketAssignment;
 use Dpb\Package\TaskMS\UseCases\TicketAssignment\CreateFromInspectionUseCase;
 use Filament\Tables\Actions\Action;
 
-class CreateTicketAction
+class CreateTaskAction
 {
     // public static function make($uri): Action
     // {

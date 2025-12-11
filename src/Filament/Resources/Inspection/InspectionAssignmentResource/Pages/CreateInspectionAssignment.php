@@ -2,17 +2,12 @@
 
 namespace Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionAssignmentResource\Pages;
 
-use Dpb\Package\TaskMS\Handlers\InspectionAssignment\CreateInspectionAssignmentHandler;
-use Dpb\Package\TaskMS\Commands\Inspection\CreateInspectionCommand;
-use Dpb\Package\TaskMS\Commands\InspectionAssignment\CreateInspectionAssignmentCommand;
 use Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionAssignmentResource;
-use Dpb\Package\TaskMS\Handlers\Inspection\CreateInspectionHandler;
-use Dpb\Package\TaskMS\Services\CreateInspectionWorkflowService;
+use Dpb\Package\TaskMS\UI\Mappers\Inspection\InspectionCreateFormMapper;
+use Dpb\Package\TaskMS\Workflows\CreateInspectionWorkflow;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Dpb\Package\TaskMS\States;
-use Illuminate\Support\Facades\DB;
 
 class CreateInspectionAssignment extends CreateRecord
 {
@@ -25,6 +20,10 @@ class CreateInspectionAssignment extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        return app(CreateInspectionWorkflowService::class)->createFromForm($data);
+        $commands = app(InspectionCreateFormMapper::class)->fromForm($data);
+        return app(CreateInspectionWorkflow::class)->handle(
+            $commands['inspectionCommand'],
+            $commands['inspectionAssignmentCommand'],
+        );
     }
 }

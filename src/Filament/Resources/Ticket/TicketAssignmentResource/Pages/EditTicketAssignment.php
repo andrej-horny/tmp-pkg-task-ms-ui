@@ -2,19 +2,13 @@
 
 namespace Dpb\Package\TaskMS\UI\Filament\Resources\Ticket\TicketAssignmentResource\Pages;
 
-use DateTimeImmutable;
-use Dpb\Package\TaskMS\Commands\Ticket\UpdateTicketCommand;
-use Dpb\Package\TaskMS\Commands\TicketAssignment\TicketCommand;
-use Dpb\Package\TaskMS\Commands\TicketAssignment\UpdateTicketAssignmentCommand;
 use Dpb\Package\TaskMS\UI\Filament\Resources\Ticket\TicketAssignmentResource;
-use Dpb\Package\TaskMS\Handlers\Ticket\UpdateTicketHandler;
-use Dpb\Package\TaskMS\Handlers\TicketAssignment\UpdateTicketAssignmentHandler;
+use Dpb\Package\TaskMS\UI\Mappers\Ticket\TicketUpdateFormMapper;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Dpb\Package\TaskMS\States;
-use Illuminate\Support\Facades\DB;
+use Dpb\Package\TaskMS\Workflows\UpdateTicketWorkflow;
 
 class EditTicketAssignment extends EditRecord
 {
@@ -44,27 +38,10 @@ class EditTicketAssignment extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        return DB::transaction(function () use ($record, $data) {
-            // update ticket
-            $ticket =  app(UpdateTicketHandler::class)->handle(
-                new UpdateTicketCommand(
-                    $record->ticket->id,
-                    new DateTimeImmutable($data['date']),
-                    $data['description'] ?? null,
-                    $data['type_id'],
-                    States\Ticket\Created::$name,
-                )
-            );
-
-            // update ticket assignment
-            return app(UpdateTicketAssignmentHandler::class)->handle(
-                new UpdateTicketAssignmentCommand(
-                    $record->id,
-                    $ticket->id,
-                    $data['subject_id'],
-                    'vehicle',
-                )
-            );
-        });
+        $commands = app(TicketUpdateFormMapper::class)->fromForm($record, $data);
+        return app(UpdateTicketWorkflow::class)->handle(
+            $commands['ticketCommand'],
+            $commands['ticketAssignmentCommand'],
+        );        
     }
 }

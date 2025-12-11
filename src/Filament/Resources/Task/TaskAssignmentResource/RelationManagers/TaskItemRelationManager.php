@@ -4,7 +4,7 @@ namespace Dpb\Package\TaskMS\UI\Filament\Resources\Task\TaskAssignmentResource\R
 
 use Dpb\Package\TaskMS\UI\Filament\Resources\Task\TaskItemResource\Forms\TaskItemForm;
 use Dpb\Package\TaskMS\UI\Filament\Resources\Task\TaskItemResource\Tables\TaskItemTable;
-use Dpb\Package\TaskMS\Services\AddTaskItemWorkflowService;
+use Dpb\Package\TaskMS\Workflows\AddTaskItemWorkflow;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Enums\MaxWidth;
@@ -27,7 +27,7 @@ class TaskItemRelationManager extends RelationManager
             ->headerActions([
                 CreateAction::make()
                     ->modalHeading(__('tms-ui::tasks/task-item.create_heading'))
-                    ->using(function (array $data, AddTaskItemWorkflowService $svc): ?Model {
+                    ->using(function (array $data, AddTaskItemWorkflow $svc): ?Model {
                         $taskId = $this->getOwnerRecord()->task->id;
                         return $svc->execute($taskId, $data);
                     })

@@ -39,7 +39,7 @@ class TaskItemAssignmentTable
                 States\Task\TaskItem\Closed::$name => 'bg-green-200',
                 States\Task\TaskItem\Cancelled::$name => 'bg-gray-50',
                 States\Task\TaskItem\InProgress::$name => 'bg-yellow-200',
-                States\Task\TaskItem\AwaitingParTask::$name => 'bg-red-200',
+                States\Task\TaskItem\AwaitingParts::$name => 'bg-red-200',
                 default => null,
             })
             // ->groups([
@@ -47,7 +47,7 @@ class TaskItemAssignmentTable
             //         ->collapsible(),
             // ])
             // ->defaultGroup('task_id')
-            ->defaultGroup(TaskItemRelationManager::class ? null : 'task_id')
+            // ->defaultGroup(TaskItemRelationManager::class ? null : 'task_id')
             ->columns([
                 // task id
                 // Tables\Columns\TextColumn::make('taskItem.task.title')

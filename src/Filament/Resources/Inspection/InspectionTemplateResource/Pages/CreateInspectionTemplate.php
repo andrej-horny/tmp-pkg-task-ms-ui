@@ -3,6 +3,8 @@
 namespace Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionTemplateResource\Pages;
 
 use Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionTemplateResource;
+use Dpb\Package\TaskMS\UI\Mappers\Inspection\InspectionTemplateFormMapper;
+use Dpb\Package\TaskMS\Workflows\CreateInspectionTemplateWorkflow;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -17,10 +19,12 @@ class CreateInspectionTemplate extends CreateRecord
         return __('tms-ui::inspections/inspection-template.create_heading');
     }  
 
-    // public function handleRecordCreation(array $data): Model
-    // {
-    //     // dd('gg');
-    //     $inspectionTemplate = app(InspectionTemplateRepository::class)->create($data);
-    //     return $inspectionTemplate;   
-    // }
+    public function handleRecordCreation(array $data): Model
+    {
+        $commands = app(InspectionTemplateFormMapper::class)->fromForm($data);
+        return app(CreateInspectionTemplateWorkflow::class)->handle(
+            $commands['inspectionCommand'],
+            $commands['templatablesCommands'],
+        );
+    }
 }

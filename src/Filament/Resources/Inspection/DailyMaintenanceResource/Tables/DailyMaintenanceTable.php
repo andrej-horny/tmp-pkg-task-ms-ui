@@ -2,24 +2,13 @@
 
 namespace Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\DailyMaintenanceResource\Tables;
 
-use Dpb\Package\TaskMS\Commands\Inspection\CreateInspectionCommand;
-use Dpb\Package\TaskMS\Commands\InspectionAssignment\CreateInspectionAssignmentCommand;
-use Dpb\Package\TaskMS\Commands\Task\CreateTaskCommand;
-use Dpb\Package\TaskMS\Commands\TaskAssignment\CreateTaskAssignmentCommand;
-use Dpb\Package\TaskMS\Handlers\Inspection\CreateInspectionHandler;
-use Dpb\Package\TaskMS\Handlers\InspectionAssignment\CreateInspectionAssignmentHandler;
-use Dpb\Package\TaskMS\Handlers\Task\CreateTaskHandler;
-use Dpb\Package\TaskMS\Handlers\TaskAssignment\CreateTaskAssignmentHandler;
 use Dpb\Package\TaskMS\Models\InspectionAssignment;
-use Dpb\Package\TaskMS\Services\CreateTaskFromDailyMaintenanceWorkflowService;
 use Dpb\Package\TaskMS\States;
-use Dpb\Package\TaskMS\UseCases\DailyMaintenance\CreateDailyMaintenanceUseCase;
-use Dpb\Package\Tasks\Models\PlaceOfOrigin;
-use Dpb\Package\Tasks\Models\TaskGroup;
+use Dpb\Package\TaskMS\UI\Mappers\Inspection\DailyMaintenanceFormMapper;
+use Dpb\Package\TaskMS\Workflows\CreateDailyMaintenanceWorkflow;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\DB;
 
 class DailyMaintenanceTable
 {
@@ -74,58 +63,21 @@ class DailyMaintenanceTable
                 // CreateDailyMaintenanceAction::make('create_daily_maintenance')
                 Tables\Actions\CreateAction::make()
                     ->model(InspectionAssignment::class)
-                    ->action(function (array $data, CreateTaskFromDailyMaintenanceWorkflowService $svc) {
-                        $svc->createFromForm($data);
-                        // DB::transaction(function () use ($data) {
-                        //     foreach ($data['vehicles'] as $vehicleId) {
-                        //         // create inspection
-                        //         $inspection = app(CreateInspectionHandler::class)->handle(
-                        //             new CreateInspectionCommand(
-                        //                 new \DateTimeImmutable($data['date']),
-                        //                 $data['inspection-template'] ?? null,
-                        //                 States\Inspection\Upcoming::$name,
-                        //             )
-                        //         );
-
-                        //         // create inspection assignment
-                        //         $inspectionAssignment = app(CreateInspectionAssignmentHandler::class)->handle(
-                        //             new CreateInspectionAssignmentCommand(
-                        //                 $inspection->id,
-                        //                 $vehicleId,
-                        //                 'vehicle',
-                        //             )
-                        //         );
-
-                        //         // create task
-                        //         $taskGroupId = TaskGroup::byCode('daily-maintenance')->first()->id;
-                        //         $placeOfOriginId = PlaceOfOrigin::byUri('during-maintenance')->first()?->id;
-                        //         $task = app(CreateTaskHandler::class)->handle(
-                        //             new CreateTaskCommand(
-                        //                 new \DateTimeImmutable(),
-                        //                 null,
-                        //                 null,
-                        //                 $taskGroupId,
-                        //                 States\Task\Task\Created::$name,
-                        //                 $placeOfOriginId
-                        //             )
-                        //         );
-
-                        //         // create task assignment
-                        //         // dd($placeOfOriginId);
-                        //         $taskAssignment = app(CreateTaskAssignmentHandler::class)->handle(
-                        //             new CreateTaskAssignmentCommand(
-                        //                 $task->id,
-                        //                 $vehicleId,
-                        //                 'vehicle',
-                        //                 $inspection->id,
-                        //                 $inspection->getMorphClass(),
-                        //                 auth()->user()->id,
-                        //                 null, //$record->subject->maintenanceGroup->id,
-                        //                 null //record->subject->maintenanceGroup->getMorphClass()
-                        //             )
-                        //         );
-                        //     }
-                        // });
+                    // ->action(function (array $data, CreateDailyMaintenanceWorkflow $svc) {
+                    //     $svc->createFromForm($data);
+                    // })
+                    ->action(function (
+                        array $data,
+                        DailyMaintenanceFormMapper $mapper,
+                        CreateDailyMaintenanceWorkflow $wf,
+                    ) {
+                        $commands = $mapper->fromForm($data);
+                        return $wf->handle(
+                            $commands['inspectionCommand'],
+                            $commands['inspectionAssignmentCommand'],
+                            $commands['taskCommand'],
+                            $commands['taskAssignmentsCommands'],
+                        );
                     })
                     ->modalWidth(MaxWidth::class)
                     ->modalDescription('TO DO: toto by malo byť do budúcna prepojené s fondom pracovného času')

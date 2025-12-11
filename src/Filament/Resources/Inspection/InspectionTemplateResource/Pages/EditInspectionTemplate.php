@@ -5,6 +5,7 @@ namespace Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionTemplate
 use Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionTemplateResource;
 use Dpb\Package\TaskMS\Models\InspectionTemplateAssignment;
 use Dpb\Package\Fleet\Models\VehicleModel;
+use Dpb\Package\TaskMS\Models\InspectionTemplatable;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -27,24 +28,13 @@ class EditInspectionTemplate extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        // dd($data);
-        // // distance conditions
-        // $data['cnd_distance_treshold'] = $this->record->getCondition('treshold', 'distance_traveled')?->value;
-        // $data['cnd_distance_1adv'] = $this->record->getCondition('1-advance', 'distance_traveled')?->value;
-        // $data['cnd_distance_2adv'] = $this->record->getCondition('2-advance', 'distance_traveled')?->value;
-
-        // // time conditions
-        // $data['cnd_time_treshold'] = $this->record->getCondition('treshold', 'days_in_service')?->value;
-        // $data['cnd_time_1adv'] = $this->record->getCondition('1-advance', 'days_in_service')?->value;
-        // $data['cnd_time_2adv'] = $this->record->getCondition('2-advance', 'days_in_service')?->value;
-
         // tempalables / vehicle models
         $vehicleModelMorphClass = app(VehicleModel::class)->getMorphClass();
-        $vehicleModels = InspectionTemplateAssignment::whereBelongsTo($this->record, 'template')
-            ->whereMorphedTo('subject', $vehicleModelMorphClass)
-            ->pluck('subject_id')
+        $vehicleModels = InspectionTemplatable::whereBelongsTo($this->record, 'template')
+            ->whereMorphedTo('templatable', $vehicleModelMorphClass)
+            ->pluck('templatable_id')
             ->toArray();
-        $data['vehicle_models'] = $vehicleModels;
+        $data['templatables'] = $vehicleModels;
 
         return $data;
     }
