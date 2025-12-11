@@ -10,11 +10,17 @@ use Dpb\Package\TaskMS\Mappers\TicketTypeToTaskGroupMapper;
 use Dpb\Package\TaskMS\States;
 use Dpb\Package\Tasks\Models\PlaceOfOrigin;
 use Dpb\Package\Fleet\Models\Vehicle;
+use Dpb\Package\TaskMS\Resolvers\TaskAssigneeResolver;
+use Dpb\Package\TaskMS\Resolvers\TaskSubjectResolver;
+use Dpb\Package\TaskMS\Resolvers\TicketSubjectResolver;
 
 class TicketCreateFormMapper
 {
     public function __construct(
         private TicketTypeToTaskGroupMapper $mapper,
+        private TicketSubjectResolver $ticketSubjectResolver,
+        private TaskSubjectResolver $taskSubjectResolver,
+        // private TaskAssigneeResolver $taskAssigneeResolver,
     ) {}
 
     public function fromForm(array $data): array
@@ -28,11 +34,12 @@ class TicketCreateFormMapper
         );
 
         // create ticket assignment
-        $subject = Vehicle::find($data['subject_id'])->first();
+        // $subject = Vehicle::find($data['subject_id'])->first();
+        $ticketSubject = $this->ticketSubjectResolver->resolve('vehicle', $data['subject_id']);
         $ticketAssignmentCommand = new CreateTicketAssignmentCommand(
             null,
-            $subject->id,
-            $subject->getMorphClass(),
+            $ticketSubject->id,
+            $ticketSubject->morphClass,
             auth()->user()->id,
         );
 
@@ -49,15 +56,19 @@ class TicketCreateFormMapper
         );
 
         // create task assignment
+        $taskSubject = $this->taskSubjectResolver->resolve('vehicle', $data['subject_id']);
+        // $taskAssignee = $this->taskAssigneeResolver->resolve('maintenance-group', $);
         $taskAssignmentCommand = new CreateTaskAssignmentCommand(
             null,
-            $data['subject_id'],
-            'vehicle',
+            $taskSubject->id,
+            $taskSubject->morphClass,
             null,
             null,
             auth()->user()->id,
-            $data['assigned_to_id'] ?? null,
-            isset($data['assigned_to_id']) ? 'maintenance-group' : null
+            null,
+            null,
+            // $taskAssignee->id ?? null,
+            // $taskAssignee->morphClass ?? null
         );
 
         return [

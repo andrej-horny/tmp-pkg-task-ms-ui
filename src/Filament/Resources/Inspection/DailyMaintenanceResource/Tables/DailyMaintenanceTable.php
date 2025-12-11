@@ -4,7 +4,7 @@ namespace Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\DailyMaintenanceRe
 
 use Dpb\Package\TaskMS\Models\InspectionAssignment;
 use Dpb\Package\TaskMS\States;
-use Dpb\Package\TaskMS\UI\Mappers\Inspection\DailyMaintenanceFormMapper;
+use Dpb\Package\TaskMS\UI\Mappers\Inspection\DailyMaintenanceCreateFormMapper;
 use Dpb\Package\TaskMS\Workflows\CreateDailyMaintenanceWorkflow;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
@@ -68,16 +68,17 @@ class DailyMaintenanceTable
                     // })
                     ->action(function (
                         array $data,
-                        DailyMaintenanceFormMapper $mapper,
+                        DailyMaintenanceCreateFormMapper $mapper,
                         CreateDailyMaintenanceWorkflow $wf,
                     ) {
                         $commands = $mapper->fromForm($data);
-                        return $wf->handle(
-                            $commands['inspectionCommand'],
-                            $commands['inspectionAssignmentCommand'],
-                            $commands['taskCommand'],
-                            $commands['taskAssignmentsCommands'],
-                        );
+                        return $wf->handle($commands);
+                        // return $wf->handle(
+                        //     $commands['inspectionCommand'],
+                        //     $commands['inspectionAssignmentCommand'],
+                        //     $commands['taskCommand'],
+                        //     $commands['taskAssignmentsCommands'],
+                        // );
                     })
                     ->modalWidth(MaxWidth::class)
                     ->modalDescription('TO DO: toto by malo byť do budúcna prepojené s fondom pracovného času')

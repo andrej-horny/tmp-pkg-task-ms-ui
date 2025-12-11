@@ -5,10 +5,15 @@ namespace Dpb\Package\TaskMS\UI\Mappers\Task;
 use Dpb\Package\TaskMS\Commands\Task\UpdateTaskCommand;
 use Dpb\Package\TaskMS\Commands\TaskAssignment\UpdateTaskAssignmentCommand;
 use Dpb\Package\TaskMS\Models\TaskAssignment;
+use Dpb\Package\TaskMS\Resolvers\TaskSubjectResolver;
 use Dpb\Package\TaskMS\States;
 
 class TaskUpdateFormMapper
 {
+    public function __construct(
+        private TaskSubjectResolver $taskSubjectResolver,
+    ) {}
+    
     public function fromForm(TaskAssignment $record, array $data): array
     {
         // update task
@@ -22,11 +27,12 @@ class TaskUpdateFormMapper
         );
 
         // update task assignment
+        $taskSubject = $this->taskSubjectResolver->resolve('vehicle', $data['subject_id']);
         $taskAssignmentCommand = new UpdateTaskAssignmentCommand(
             $record->id,
             $record->task->id,
-            $data['subject_id'],
-            'vehicle',
+            $taskSubject->id,
+            $taskSubject->morphClass,
             null,
             null,
             isset($data['assigned_to_id']) ?? null,

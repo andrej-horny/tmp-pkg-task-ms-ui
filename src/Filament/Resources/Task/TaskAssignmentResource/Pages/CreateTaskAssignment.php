@@ -25,32 +25,5 @@ class CreateTaskAssignment extends CreateRecord
             $commands['taskCommand'],
             $commands['taskAssignmentCommand'],
         );        
-        // return DB::transaction(function () use ($data) {
-        //     // create task
-        //     $taskData = $data['task'];
-        //     $task = app(CreateTaskHandler::class)->handle(
-        //         new CreateTaskCommand(
-        //             new \DateTimeImmutable($taskData['date']),
-        //             null,
-        //             $taskData['description'] ?? null,
-        //             $taskData['group_id'],
-        //             States\Task\Task\Created::$name,
-        //         )
-        //     );
-
-        //     // create task assignment
-        //     return app(CreateTaskAssignmentHandler::class)->handle(
-        //         new CreateTaskAssignmentCommand(
-        //             $task->id,
-        //             $data['subject_id'],
-        //             'vehicle',
-        //             null,
-        //             null,
-        //             auth()->user()->id,
-        //             $data['assigned_to_id'] ?? null,
-        //             isset($data['assigned_to_id']) ? 'maintenance-group' : null
-        //         )
-        //     );
-        // });
     }
 }

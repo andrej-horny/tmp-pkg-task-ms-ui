@@ -4,11 +4,16 @@ namespace Dpb\Package\TaskMS\UI\Mappers\Task;
 
 use Dpb\Package\TaskMS\Commands\Task\CreateTaskCommand;
 use Dpb\Package\TaskMS\Commands\TaskAssignment\CreateTaskAssignmentCommand;
+use Dpb\Package\TaskMS\Resolvers\TaskSubjectResolver;
 use Dpb\Package\TaskMS\States;
 use Dpb\Package\Tasks\Models\PlaceOfOrigin;
 
 class TaskCreateFormMapper
 {
+    public function __construct(
+        private TaskSubjectResolver $taskSubjectResolver,
+    ) {}
+
     public function fromForm(array $data): array
     {
         // create task
@@ -23,10 +28,11 @@ class TaskCreateFormMapper
         );
 
         // create task assignment
+        $taskSubject = $this->taskSubjectResolver->resolve('vehicle', $data['subject_id']);
         $taskAssignmentCommand = new CreateTaskAssignmentCommand(
             null,
-            $data['subject_id'],
-            'vehicle',
+            $taskSubject->id,
+            $taskSubject->morphClass,
             null,
             null,
             auth()->user()->id,
