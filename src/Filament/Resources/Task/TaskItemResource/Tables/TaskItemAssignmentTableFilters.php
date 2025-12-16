@@ -55,7 +55,7 @@ class TaskItemAssignmentTableFilters
                         States\Task\TaskItem\Closed::$name => __('tms-ui::tasks/task-item.states.closed'),
                         States\Task\TaskItem\Cancelled::$name => __('tms-ui::tasks/task-item.states.cancelled'),
                         States\Task\TaskItem\InProgress::$name => __('tms-ui::tasks/task-item.states.in-progress'),
-                        States\Task\TaskItem\AwaitingParTask::$name => __('tms-ui::tasks/task-item.states.awaiting-parTask'),
+                        States\Task\TaskItem\AwaitingParts::$name => __('tms-ui::tasks/task-item.states.awaiting-parTask'),
                     ])
                     ->multiple()
                     ->inline()

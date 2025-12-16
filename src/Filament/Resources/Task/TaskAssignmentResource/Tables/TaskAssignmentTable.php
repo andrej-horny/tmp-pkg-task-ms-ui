@@ -35,12 +35,13 @@ class TaskAssignmentTable
                     ->date('j.n.Y')
                     ->label(__('tms-ui::tasks/task.table.columns.date')),
                 // subject
-                Tables\Columns\TextColumn::make('subject.code.code')
+                // Tables\Columns\TextColumn::make('subject.code.code')
+                Tables\Columns\TextColumn::make('subject_label')
                     ->label(__('tms-ui::tasks/task.table.columns.subject')),
                 // ->state(function ($record, TaskAssignment $svc) {
                 //     return $svc->whereBelongsTo($record)->first()->subject?->code?->code;
                 // }),
-                // group type 
+                // group type
                 Tables\Columns\TextColumn::make('task.group.title')
                     ->label(__('tms-ui::tasks/task.table.columns.group')),
                 // title
@@ -141,7 +142,7 @@ class TaskAssignmentTable
                 //         return $result;
                 //     }),
             ])
-            // ->filters(TaskAssignmentTableFilters::make())
+            ->filters(TaskAssignmentTableFilters::make())
             ->headerActions([
                 Tables\Actions\CreateAction::make()
             ])

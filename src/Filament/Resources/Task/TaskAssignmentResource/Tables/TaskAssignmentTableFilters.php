@@ -98,12 +98,12 @@ class TaskAssignmentTableFilters
                         );
                 }),
             // source
-            Tables\Filters\SelectFilter::make('task_source_id')
-                ->relationship('task.source', 'title')
-                ->searchable()
-                ->preload()
-                ->multiple()
-                ->label(__('tms-ui::tasks/task.table.filters.source')),
+            // Tables\Filters\SelectFilter::make('task_source_id')
+            //     ->relationship('task.source', 'title')
+            //     ->searchable()
+            //     ->preload()
+            //     ->multiple()
+            //     ->label(__('tms-ui::tasks/task.table.filters.source')),
             // maintenance group
             Tables\Filters\Filter::make('assignedTo')
                 ->form([

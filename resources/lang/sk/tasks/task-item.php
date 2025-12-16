@@ -43,7 +43,7 @@ return [
         ]
     ],
     'table' => [
-        'heading' => 'Podzakázky',
+        'heading' => 'Podzákazky',
         'empty_state_heading' => 'Žiadne podzákazky na zobrazenie',
         'row_groups' => [
         ],

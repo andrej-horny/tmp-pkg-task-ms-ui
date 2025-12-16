@@ -7,6 +7,7 @@ use Dpb\Package\TaskMS\Models\ActivityAssignment;
 use Dpb\Package\TaskMS\Models\TaskAssignment;
 use Dpb\Package\TaskMS\Models\TaskItemAssignment;
 use Dpb\Package\TaskMS\Models\WorkAssignment;
+use Dpb\Package\TaskMS\Repositories\TaskAssignmentRepository;
 use Dpb\Package\TaskMS\Services\Activity\Activity\WorkService;
 use Dpb\Package\TaskMS\Services\Task\ActivityService;
 use Dpb\Package\TaskMS\Services\Task\CreateTickeTaskervice;
@@ -27,10 +28,105 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaskItemAssignmentTable
 {
+
     public static function make(Table $table): Table
     {
         return $table
+            ->heading(__('tms-ui::tasks/task-item.table.heading'))
+            ->emptyStateHeading(__('tms-ui::tasks/task-item.table.empty_state_heading'))
+            ->description('TO DO: Pridávanie a editácia zatiaľ len cez zákazku')
+            ->paginated([10, 25, 50, 100, 'all'])
+            ->defaultPaginationPageOption(100)
+            ->recordClasses(fn($record) => match ($record->taskItem->state?->getValue()) {
+                States\Task\TaskItem\Created::$name => 'bg-blue-200',
+                States\Task\TaskItem\Closed::$name => 'bg-green-200',
+                States\Task\TaskItem\Cancelled::$name => 'bg-gray-50',
+                States\Task\TaskItem\InProgress::$name => 'bg-yellow-200',
+                States\Task\TaskItem\AwaitingParts::$name => 'bg-red-200',
+                default => null,
+            })
+            ->columns([
+                // task id
+                Tables\Columns\TextColumn::make('taskItem.task.title')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.task'))
+                    ->state(fn(TaskItemAssignment $record, TaskAssignmentRepository $taRepo) => $taRepo->findByTaskId($record?->taskItem?->task->id)?->title),
+                // task item code id
+                Tables\Columns\TextColumn::make('taskItem.code')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.code'))
+                    ->grow(false),
+                // date
+                Tables\Columns\TextColumn::make('taskItem.date')->date()
+                    ->label(__('tms-ui::tasks/task-item.table.columns.date'))
+                    ->grow(false),
+                // subject
+                Tables\Columns\TextColumn::make('taskItem.task.subject')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.subject'))
+                    ->state(function (TaskItemAssignment $record, TaskAssignmentRepository $taRepo) {
+                        $ticketAssignment = $taRepo->findByTaskId($record?->taskItem?->task->id);
+                        if ($ticketAssignment !== null) {
+                            return $ticketAssignment->getSubjectLabelAttribute();
+                        }
+                    }),
+                // title
+                Tables\Columns\TextColumn::make('taskItem.group.title')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.group')),
+                // description
+                Tables\Columns\TextColumn::make('taskItem.description')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.description'))
+                    ->grow(),
+                // state
+                Tables\Columns\TextColumn::make('taskItem.state')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.state'))
+                    ->state(fn(TaskItemAssignment $record) => $record?->taskItem?->state?->label()),
+                // ->state(fn($record) => dd($record)),
+                // ->action(
+                //     Action::make('select')
+                //         ->requiresConfirmation()
+                //         ->action(function (TaskItem $record): void {
+                //             $record->state == 'created'
+                //                 ? $record->state->transition(new CreatedToInProgress($record, auth()->guard()->user()))
+                //                 : $record->state->transition(new InProgressToCancelled($record, auth()->guard()->user()));
+                //         }),
+                // ),
+                // TextColumn::make('department.code'),
+                // subject
+                // Tables\Columns\TextColumn::make('taskItem.task.subject')
+                //     ->label(__('tms-ui::tasks/task-item.table.columns.subject.label'))
+                //     ->state(function (TaskItemAssignment $record, TaskAssignmenTaskervice $svc) {
+                //         if ($record->taskItem->task !== null) {
+                //             return $svc->geTaskubject($record->taskItem->task)?->code?->code;
+                //         }
+                //     })
+                //     ->hiddenOn(TaskItemRelationManager::class),
+                Tables\Columns\TextColumn::make('assignedTo.code')
+                    ->label(__('tms-ui::tasks/task-item.table.columns.assigned_to.label'))
+                    ->badge()
+                    ->color(fn(string $state) => match ($state) {
+                        '1TPA' => 'primary',
+                        default => 'info'
+                    }),
+
+            ])
+            ->filters(TaskItemAssignmentTableFilters::make())
+            ->headerActions([
+                // Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                // ViewAction::make(),
+                // EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    // Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+    public static function make1(Table $table): Table
+    {
+        return $table
             ->heading(__('tms-ui::tasks/task.relation_manager.task_items.table.heading'))
+            ->emptyStateHeading(__('tms-ui::tasks/task.relation_manager.task_items.table.empty_state_heading'))
             ->description('Pridávanie a editácia zatiaľ len cez zákazku')
             ->paginated([10, 25, 50, 100, 'all'])
             ->defaultPaginationPageOption(100)
@@ -52,7 +148,7 @@ class TaskItemAssignmentTable
                 // task id
                 // Tables\Columns\TextColumn::make('taskItem.task.title')
                 //     ->label(__('tms-ui::tasks/task-item.table.columns.task.label')),
-                    // ->tooltip(fn(TaskItem $record) => $record?->task?->title),
+                // ->tooltip(fn(TaskItem $record) => $record?->task?->title),
                 // task item code id
                 Tables\Columns\TextColumn::make('taskItem.code')
                     ->label(__('tms-ui::tasks/task-item.table.columns.code.label'))
@@ -62,7 +158,7 @@ class TaskItemAssignmentTable
                     ->grow(false),
                 // Tables\Columns\TextColumn::make('parent.id')
                 //     ->label(__('tms-ui::tasks/task-item.table.columns.parent.label')),
-                // title 
+                // title
                 Tables\Columns\TextColumn::make('taskItem.group.title')
                     ->label(__('tms-ui::tasks/task-item.table.columns.group.label')),
                 // ->state(fn($record) => print_r($record->group)),
@@ -144,7 +240,7 @@ class TaskItemAssignmentTable
                 //     }),
 
                 Tables\Columns\TextColumn::make('expenses')
-                    ->label(__('tms-ui::tasks/task-item.table.columns.expenses'))                    
+                    ->label(__('tms-ui::tasks/task-item.table.columns.expenses'))
                     ->state(function ($record) {
                         $materials = $record->materials?->sum(function ($material) {
                             return $material->price;
@@ -167,7 +263,7 @@ class TaskItemAssignmentTable
             ])
             ->actions([
                 // ViewAction::make(),
-                // EditAction::make(),                    
+                // EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

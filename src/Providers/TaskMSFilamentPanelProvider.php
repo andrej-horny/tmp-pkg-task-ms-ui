@@ -29,55 +29,57 @@ class TaskMSFilamentPanelProvider extends PanelProvider
             ->path('tms')                   // URL path
             ->maxContentWidth(MaxWidth::Full)
             ->breadcrumbs(false)
-            ->topNavigation()            
+            ->topNavigation()
             ->resources([
                 // activities
                 // Resources\Activity\ActivityResource::class,
                 // Resources\Activity\ActivityTemplateResource::class,
                 // Resources\Activity\TemplateGroupResource::class,
                 // // tasks
-                Resources\Task\TaskGroupResource::class,
-                Resources\Task\TaskItemGroupResource::class,
-                Resources\Task\TaskAssignmentResource::class,
-                Resources\Task\PlaceOfOriginResource::class,
-                // tickets
-                Resources\Ticket\TicketAssignmentResource::class,
-                Resources\Ticket\TicketTypeResource::class,
-                // inspections
-                Resources\Inspection\InspectionAssignmentResource::class,
-                Resources\Inspection\DailyMaintenanceResource::class,
-                Resources\Inspection\InspectionTemplateGroupResource::class,
-                Resources\Inspection\InspectionTemplateResource::class,
-                Resources\Inspection\UpcomingInspectionResource::class,
-                // // fleet
-                // Resources\Fleet\DailyExpeditionResource::class,
-                Resources\Fleet\MaintenanceGroupResource::class,
-                Resources\Fleet\VehicleResource::class,
-                Resources\Fleet\BrandResource::class,
-                Resources\Fleet\VehicleGroupResource::class,
-                Resources\Fleet\VehicleModelResource::class,
-                Resources\Fleet\VehicleTypeResource::class,
-                // reports
-                Resources\Reports\VehicleStatusReportResource::class,
+                // Resources\Task\TaskGroupResource::class,
+                // Resources\Task\TaskItemGroupResource::class,
+                // Resources\Task\TaskItemResource::class,
+                // Resources\Task\TaskAssignmentResource::class,
+                // Resources\Task\PlaceOfOriginResource::class,
+                // // tickets
+                // Resources\Ticket\TicketAssignmentResource::class,
+                // Resources\Ticket\TicketTypeResource::class,
+                // // inspections
+                // Resources\Inspection\InspectionAssignmentResource::class,
+                // Resources\Inspection\DailyMaintenanceResource::class,
+                // Resources\Inspection\InspectionTemplateGroupResource::class,
+                // Resources\Inspection\InspectionTemplateResource::class,
+                // Resources\Inspection\UpcomingInspectionResource::class,
+                // // // fleet
+                // // Resources\Fleet\DailyExpeditionResource::class,
+                // Resources\Fleet\MaintenanceGroupResource::class,
+                // Resources\Fleet\VehicleResource::class,
+                // Resources\Fleet\BrandResource::class,
+                // Resources\Fleet\VehicleGroupResource::class,
+                // Resources\Fleet\VehicleModelResource::class,
+                // Resources\Fleet\VehicleTypeResource::class,
+                // // reports
+                // Resources\Reports\VehicleStatusReportResource::class,
 
-            ])
+            ]);
             // ->discoverResources(in: 'Dpb/Package/TaskMSFilament/Resources', for: 'Dpb\\Package\\TaskMSFilament\\Filament\\Resources')
             // ->discoverPages(in: app_path('Filament/Fleet/Pages'), for: 'App\\Filament\\Fleet\\Pages')
-            ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
-            ]);            
-        
+            // ->middleware(['web', Authenticate::class]);
+            // ->middleware([
+            //     EncryptCookies::class,
+            //     AddQueuedCookiesToResponse::class,
+            //     StartSession::class,
+            //     AuthenticateSession::class,
+            //     ShareErrorsFromSession::class,
+            //     VerifyCsrfToken::class,
+            //     SubstituteBindings::class,
+            //     DisableBladeIconComponents::class,
+            //     DispatchServingFilamentEvent::class,
+            // ])
+            // ->authMiddleware([
+            //     'web', Authenticate::class,
+            // ]);
+
     }
 
 }
