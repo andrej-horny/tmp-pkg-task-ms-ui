@@ -17,8 +17,8 @@ class TaskMSUIServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('pkg-task-ms-ui')
-            ->publishesServiceProvider('TaskMSFilamentPanelProvider');
+            ->name('pkg-task-ms-ui');
+            // ->publishesServiceProvider('TaskMSFilamentPanelProvider');
     }
 
     public function packageBooted(): void
@@ -31,40 +31,40 @@ class TaskMSUIServiceProvider extends PackageServiceProvider
         Livewire::component('tables.fleet.vehicle.malfunctions', VehicleResource\Tables\MalfunctionsTable::class);
 
         // Register Filament resources
-        Filament::serving(function () {
-            $panel = Filament::getCurrentPanel();
-            $currentResources = $panel->getResources();
+        // Filament::serving(function () {
+        //     $panel = Filament::getCurrentPanel();
+        //     $currentResources = $panel->getResources();
 
-            // Add resources from other packages
-            $panel->resources([
-                ...$currentResources,
-                // tasks
-                Resources\Task\TaskGroupResource::class,
-                Resources\Task\TaskItemGroupResource::class,
-                Resources\Task\TaskItemResource::class,
-                Resources\Task\TaskAssignmentResource::class,
-                Resources\Task\PlaceOfOriginResource::class,
-                // tickets
-                Resources\Ticket\TicketAssignmentResource::class,
-                Resources\Ticket\TicketTypeResource::class,
-                // inspections
-                Resources\Inspection\InspectionAssignmentResource::class,
-                Resources\Inspection\DailyMaintenanceResource::class,
-                Resources\Inspection\InspectionTemplateGroupResource::class,
-                Resources\Inspection\InspectionTemplateResource::class,
-                Resources\Inspection\UpcomingInspectionResource::class,
-                // // fleet
-                // Resources\Fleet\DailyExpeditionResource::class,
-                Resources\Fleet\MaintenanceGroupResource::class,
-                Resources\Fleet\VehicleResource::class,
-                Resources\Fleet\BrandResource::class,
-                Resources\Fleet\VehicleGroupResource::class,
-                Resources\Fleet\VehicleModelResource::class,
-                Resources\Fleet\VehicleTypeResource::class,
-                // reports
-                Resources\Reports\VehicleStatusReportResource::class,
+        //     // Add resources from other packages
+        //     $panel->resources([
+        //         ...$currentResources,
+        //         // tasks
+        //         Resources\Task\TaskGroupResource::class,
+        //         Resources\Task\TaskItemGroupResource::class,
+        //         Resources\Task\TaskItemResource::class,
+        //         Resources\Task\TaskAssignmentResource::class,
+        //         Resources\Task\PlaceOfOriginResource::class,
+        //         // tickets
+        //         Resources\Ticket\TicketAssignmentResource::class,
+        //         Resources\Ticket\TicketTypeResource::class,
+        //         // inspections
+        //         Resources\Inspection\InspectionAssignmentResource::class,
+        //         Resources\Inspection\DailyMaintenanceResource::class,
+        //         Resources\Inspection\InspectionTemplateGroupResource::class,
+        //         Resources\Inspection\InspectionTemplateResource::class,
+        //         Resources\Inspection\UpcomingInspectionResource::class,
+        //         // // fleet
+        //         // Resources\Fleet\DailyExpeditionResource::class,
+        //         Resources\Fleet\MaintenanceGroupResource::class,
+        //         Resources\Fleet\VehicleResource::class,
+        //         Resources\Fleet\BrandResource::class,
+        //         Resources\Fleet\VehicleGroupResource::class,
+        //         Resources\Fleet\VehicleModelResource::class,
+        //         Resources\Fleet\VehicleTypeResource::class,
+        //         // reports
+        //         Resources\Reports\VehicleStatusReportResource::class,
 
-            ]);
-        });
+        //     ]);
+        // });
     }
 }

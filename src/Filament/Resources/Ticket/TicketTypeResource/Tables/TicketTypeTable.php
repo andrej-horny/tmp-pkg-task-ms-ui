@@ -11,6 +11,7 @@ class TicketTypeTable
     {
         return $table
             ->heading(__('tms-ui::tickets/ticket-type.table.heading'))
+            ->emptyStateHeading(__('tms-ui::tickets/ticket-type.table.empty_state_heading'))
             ->paginated([10, 25, 50, 100, 'all'])
             ->defaultPaginationPageOption(100)
             ->columns([

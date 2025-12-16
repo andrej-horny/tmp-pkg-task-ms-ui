@@ -5,14 +5,20 @@ namespace Dpb\Package\TaskMS\UI\Mappers\Inspection;
 use Dpb\Package\TaskMS\Commands\Inspection\CreateInspectionCommand;
 use Dpb\Package\TaskMS\Commands\InspectionAssignment\CreateInspectionAssignmentCommand;
 use Dpb\Package\TaskMS\Commands\Task\CreateTaskCommand;
+use Dpb\Package\TaskMS\Commands\TaskAssignment\CreateFromDailyMaintenanceCommand;
 use Dpb\Package\TaskMS\Commands\TaskAssignment\CreateTaskAssignmentCommand;
 use Dpb\Package\TaskMS\Commands\TaskItem\CreateTaskItemCommand;
+use Dpb\Package\TaskMS\Resolvers\TaskSubjectResolver;
 use Dpb\Package\TaskMS\States;
 use Dpb\Package\Tasks\Models\PlaceOfOrigin;
 use Dpb\Package\Tasks\Models\TaskGroup;
 
 class DailyMaintenanceCreateFormMapper
 {
+    public function __construct(
+        private TaskSubjectResolver $taskSubjectResolver,
+    ) {}
+
     public function fromForm(array $data): array
     {
         $commands = [];
@@ -44,10 +50,11 @@ class DailyMaintenanceCreateFormMapper
             );
 
             // create task assignment
-            $taskAssignmentCommand = new CreateTaskAssignmentCommand(
+            $taskSubject = $this->taskSubjectResolver->resolve('vehicle', $vehicleId);
+            $taskAssignmentCommand = new CreateFromDailyMaintenanceCommand(
                 null,
-                $vehicleId,
-                'vehicle',
+                $taskSubject->id,
+                $taskSubject->morphClass,
                 null,
                 null, //$inspection->getMorphClass(),
                 auth()->user()->id,
@@ -57,13 +64,13 @@ class DailyMaintenanceCreateFormMapper
 
             // // create task items
             // $groupId = TaskGroup::byUri('daily-maintenance')->first()->id;
-            // $templatables = 
+            // $templatables =
             // $taskItem = new CreateTaskItemCommand(
             //     $data['date'],
             //     $vehicleId,
             //     'vehicle',
             //     null,
-            //     States\Task\TaskItem\Created::$name,                
+            //     States\Task\TaskItem\Created::$name,
             //     $groupId
             // );
 
@@ -75,6 +82,6 @@ class DailyMaintenanceCreateFormMapper
             ];
         }
 
-        return $commands;        
+        return $commands;
     }
 }

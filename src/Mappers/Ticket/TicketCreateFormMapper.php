@@ -10,7 +10,9 @@ use Dpb\Package\TaskMS\Mappers\TicketTypeToTaskGroupMapper;
 use Dpb\Package\TaskMS\States;
 use Dpb\Package\Tasks\Models\PlaceOfOrigin;
 use Dpb\Package\Fleet\Models\Vehicle;
+use Dpb\Package\TaskMS\Commands\TaskAssignment\CreateFromTicketCommand;
 use Dpb\Package\TaskMS\Resolvers\TaskAssigneeResolver;
+use Dpb\Package\TaskMS\Resolvers\TaskSourceResolver;
 use Dpb\Package\TaskMS\Resolvers\TaskSubjectResolver;
 use Dpb\Package\TaskMS\Resolvers\TicketSubjectResolver;
 
@@ -20,6 +22,7 @@ class TicketCreateFormMapper
         private TicketTypeToTaskGroupMapper $mapper,
         private TicketSubjectResolver $ticketSubjectResolver,
         private TaskSubjectResolver $taskSubjectResolver,
+        // private TaskSourceResolver $taskSourceResolver,
         // private TaskAssigneeResolver $taskAssigneeResolver,
     ) {}
 
@@ -57,8 +60,9 @@ class TicketCreateFormMapper
 
         // create task assignment
         $taskSubject = $this->taskSubjectResolver->resolve('vehicle', $data['subject_id']);
+        // $taskSource = $this->taskSourceResolver->resolve('ticket', $data['subject_id']);
         // $taskAssignee = $this->taskAssigneeResolver->resolve('maintenance-group', $);
-        $taskAssignmentCommand = new CreateTaskAssignmentCommand(
+        $taskAssignmentCommand = new CreateFromTicketCommand(
             null,
             $taskSubject->id,
             $taskSubject->morphClass,
