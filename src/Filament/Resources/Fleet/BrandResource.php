@@ -36,7 +36,7 @@ class BrandResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-fleet.navigation.vehicle-brand') ?? 999;
+        return config('pkg-task-ms-ui.navigation.vehicle-brand') ?? 999;
     }
 
     // public static function canViewAny(): bool

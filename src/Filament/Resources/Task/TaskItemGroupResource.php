@@ -36,7 +36,7 @@ class TaskItemGroupResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-tasks.navigation.task-item-group') ?? 999;
+        return config('pkg-task-ms-ui.navigation.task-item-group') ?? 999;
     }
 
     // public static function canViewAny(): bool

@@ -25,7 +25,7 @@ return [
             'warranty_initial_date' => [
                 'label' => 'Záruka platí od',
                 'hint' => '',
-            ],            
+            ],
             'warranty_months' => [
                 'label' => 'Záruka',
                 'hint' => 'V mesiacoch',
@@ -33,11 +33,11 @@ return [
             'warranty_initial_km' => [
                 'label' => 'Záruka platí od km',
                 'hint' => '',
-            ],            
+            ],
             'warranty_km' => [
                 'label' => 'Záruka',
                 'hint' => 'V km',
-            ]            
+            ]
         ],
         'tabs' => [
             'parameters' => 'Vlastnosti',
@@ -80,7 +80,7 @@ return [
                         'tooltip' => 'Náklady',
                     ]
                 ]
-            ],            
+            ],
         ],
     ],
     'table' => [
@@ -110,7 +110,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Vozidlá',
-        'group' => 'Flotila',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Vozidlo',
@@ -125,5 +125,5 @@ return [
         'missing-parts' => 'Čaká na náhr. diely',
         'waiting-for-repair-spot' => 'Čaká na voľné pracovisko',
         'waiting-for-insurance' => 'Čaká na poisťovňu',
-    ]     
+    ]
 ];

@@ -40,7 +40,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Kontroly',
-        'group' => 'Kontroly',
+        // 'group' => 'Kontroly',
     ],
     'resource' => [
         'model_label' => 'Kontrola',

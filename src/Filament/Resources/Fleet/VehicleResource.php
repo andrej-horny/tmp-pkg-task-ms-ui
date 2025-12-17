@@ -37,10 +37,10 @@ class VehicleResource extends Resource
     {
         return __('tms-ui::fleet/vehicle.navigation.group');
     }
-    
+
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-fleet.navigation.vehicle') ?? 999;
+        return config('pkg-task-ms-ui.navigation.vehicle') ?? 999;
     }
 
     public static function canViewAny(): bool
@@ -82,5 +82,5 @@ class VehicleResource extends Resource
                 $userHandledVehicleTypes = auth()->user()->vehicleTypes();
                 $q->byType($userHandledVehicleTypes);
             });
-    }    
+    }
 }

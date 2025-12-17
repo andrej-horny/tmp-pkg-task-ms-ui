@@ -41,7 +41,8 @@ class UpcomingInspectionResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->can('inspections.upcomming-inspection.read');
+        // return auth()->user()->can('inspections.upcomming-inspection.read');
+        return false;
     }
 
     // public static function form(Form $form): Form

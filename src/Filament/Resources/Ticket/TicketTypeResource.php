@@ -38,10 +38,15 @@ class TicketTypeResource extends Resource
         return __('tms-ui::tickets/ticket-type.navigation.group');
     }
 
+    public static function getNavigationSort(): ?int
+    {
+        return config('pkg-task-ms-ui.navigation.upcomming-inspection') ?? 999;
+    }
+
     // public static function canViewAny(): bool
     // {
     //     return auth()->user()->can('tickets.ticket-type.read');
-    // }    
+    // }
 
     public static function form(Form $form): Form
     {

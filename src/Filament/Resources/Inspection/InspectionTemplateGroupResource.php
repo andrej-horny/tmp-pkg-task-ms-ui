@@ -36,7 +36,7 @@ class InspectionTemplateGroupResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-inspections.navigation.inspection-template-group') ?? 999;
+        return config('pkg-task-ms-ui.navigation.inspection-template-group') ?? 999;
     }
 
     // public static function canViewAny(): bool
@@ -53,7 +53,7 @@ class InspectionTemplateGroupResource extends Resource
     {
         return InspectionTemplateGroupTable::make($table);
     }
-    
+
     public static function getPages(): array
     {
         return [

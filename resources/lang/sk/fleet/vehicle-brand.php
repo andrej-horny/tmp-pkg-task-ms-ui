@@ -7,7 +7,7 @@ return [
             'create_heading' => 'Vytvoriť výrobcu vozidla',
             'update_heading' => 'Upraviť výrobca vozidila: :title',
         ],
-    ],    
+    ],
     'create_heading' => 'Vytvoriť výrobcu vozidla',
     'list_heading' => 'Výrobcovia vozidiel',
     'update_heading' => 'Upraviť výrobcu vozidla: :title',
@@ -25,7 +25,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Výrobcovia vozidiel',
-        'group' => 'Flotila',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Výrobca vozidiel',

@@ -36,8 +36,8 @@ class InspectionTemplateResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-inspections.navigation.inspection-template') ?? 999;
-    }    
+        return config('pkg-task-ms-ui.navigation.inspection-template') ?? 999;
+    }
 
     // public static function canViewAny(): bool
     // {

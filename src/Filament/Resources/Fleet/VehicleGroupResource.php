@@ -38,7 +38,7 @@ class VehicleGroupResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-fleet.navigation.vehicle-group') ?? 999;
+        return config('pkg-task-ms-ui.navigation.vehicle-group') ?? 999;
     }
 
     // public static function canViewAny(): bool
@@ -73,10 +73,10 @@ class VehicleGroupResource extends Resource
     // public static function canEdit(Model $record): bool
     // {
     //     return auth()->check() && auth()->user()->can('fleet.vehicle-group.update');
-    // }   
-    
+    // }
+
     // public static function canDelete(Model $record): bool
-    // {        
+    // {
     //     return auth()->check() && auth()->user()->can('fleet.vehicle-group.delete');
-    // }       
+    // }
 }

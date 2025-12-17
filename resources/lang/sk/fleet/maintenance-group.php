@@ -9,7 +9,7 @@ return [
             'create_heading' => 'Vytvoriť technickú prevádzku',
             'update_heading' => 'Upraviť technickú prevádzku: :title',
         ],
-    ],     
+    ],
     'form' => [
         'fields' => [
             'code' => [
@@ -43,7 +43,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Technické prevádzky',
-        'group' => 'Flotila',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Technická prevádzka',

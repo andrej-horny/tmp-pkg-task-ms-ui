@@ -6,6 +6,8 @@ use Dpb\Package\TaskMS\Models\InspectionAssignment;
 use Dpb\Package\TaskMS\Services\Inspection\AssignmentService as InspectionAssignmentService;
 use Dpb\Package\TaskMS\States;
 use Dpb\Package\Inspections\Models\Inspection;
+use Dpb\Package\TaskMS\Services\Inspection\InspectionPlannerService;
+use Filament\Actions\Action;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -58,10 +60,15 @@ class InspectionAssignmentTable
             ])
             ->filters(InspectionAssignmentTableFilters::make())
             ->headerActions([
+                Tables\Actions\Action::make('gg')
+
+                ->action(function(InspectionPlannerService $svc) {
+                    $svc->execute();
+                }),
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 // ->mutateFormDataUsing(function (ActivityService $svc, array $data, Ticket $record) {
                 //         ->(function (ActivityService $svc, array $data, Ticket $record) {

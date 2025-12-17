@@ -7,7 +7,6 @@ use Dpb\Package\TaskMS\UI\Filament\Resources\Reports\VehicleStatusReportResource
 use Dpb\Package\TaskMS\UI\Filament\Resources\Reports\VehicleStatusReportResource\Tables\VehicleStatusReportTable;
 use Dpb\Package\TaskMS\Models\DailyExpedition;
 use Dpb\Package\TaskMS\Models\ReadOnly\Reports\VehicleStatusReport;
-// use Dpb\Package\TaskMS\Models\Reports\VehicleStatusReport;
 use Dpb\Package\Fleet\Models\Vehicle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,8 +15,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class VehicleStatusReportResource extends Resource
 {
-    // protected static ?string $model = Vehicle::class;
-    // protected static ?string $model = DailyExpedition::class;
     protected static ?string $model = VehicleStatusReport::class;
 
     public static function getModelLabel(): string
@@ -40,10 +37,11 @@ class VehicleStatusReportResource extends Resource
         return __('tms-ui::reports/vehicle-status-report.navigation.group');
     }
 
-    // public static function canViewAny(): bool
-    // {
-    //     return auth()->user()->can('reports.vehicle-status-reports');
-    // }
+    public static function canViewAny(): bool
+    {
+        // return auth()->user()->can('reports.vehicle-status-reports');
+        return false;
+    }
 
     public static function table(Table $table): Table
     {
@@ -72,5 +70,5 @@ class VehicleStatusReportResource extends Resource
         // ->whereHas('vehicle', function($q) {
         //     $q->byMa
         // })
-    // }        
+    // }
 }

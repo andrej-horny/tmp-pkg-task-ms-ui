@@ -5,10 +5,14 @@ namespace Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionTemplate
 use Dpb\Package\TaskMS\UI\Filament\Resources\Inspection\InspectionTemplateResource;
 use Dpb\Package\TaskMS\Models\InspectionTemplateAssignment;
 use Dpb\Package\Fleet\Models\VehicleModel;
+use Dpb\Package\TaskMS\Handlers\Inspection\UpdateInspectionHandler;
 use Dpb\Package\TaskMS\Models\InspectionTemplatable;
+use Dpb\Package\TaskMS\UI\Mappers\Inspection\InspectionTemplateUpdateFormMapper;
+use Dpb\Package\TaskMS\Workflows\UpdateInspectionTemplateWorkflow;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class EditInspectionTemplate extends EditRecord
 {
@@ -41,9 +45,10 @@ class EditInspectionTemplate extends EditRecord
 
     // protected function handleRecordUpdate(Model $record, array $data): Model
     // {
-    //     $ticketItemRepo = app(TicketItemRepository::class);
-    //     $result = $ticketItemRepo->update($record, $data);
-
-    //     return $result;
-    // }    
+    //     $commands = app(InspectionTemplateUpdateFormMapper::class)->fromForm($record, $data);
+    //     return app(UpdateInspectionTemplateWorkflow::class)->handle(
+    //         $commands['inspectionTemplateCommand'],
+    //         $commands['templatablesCommands'],
+    //     );
+    // }
 }

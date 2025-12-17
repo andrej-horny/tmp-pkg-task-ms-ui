@@ -30,10 +30,10 @@ class TaskItemResource extends Resource
         return __('tms-ui::tasks/task-item.navigation.label');
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('tms-ui::tasks/task-item.navigation.group');
-    }
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return __('tms-ui::tasks/task-item.navigation.group');
+    // }
 
     public static function getNavigationSort(): ?int
     {
@@ -68,9 +68,9 @@ class TaskItemResource extends Resource
     {
         return [
             'index' => Pages\ListTaskItems::route('/'),
-            'create' => Pages\CreateTaskItem::route('/create'),
-            'view' => Pages\ViewTaskItemPage::route('/{record}'),
-            'edit' => Pages\EditTaskItem::route('/{record}/edit'),
+            // 'create' => Pages\CreateTaskItem::route('/create'),
+            // 'view' => Pages\ViewTaskItemPage::route('/{record}'),
+            // 'edit' => Pages\EditTaskItem::route('/{record}/edit'),
         ];
     }
 }

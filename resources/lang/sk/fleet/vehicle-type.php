@@ -36,7 +36,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Typy vozidiel',
-        'group' => 'Flotila',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Typ vozidla',

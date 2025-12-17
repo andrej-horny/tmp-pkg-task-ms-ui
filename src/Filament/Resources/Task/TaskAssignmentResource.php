@@ -31,10 +31,10 @@ class TaskAssignmentResource extends Resource
         return __('tms-ui::tasks/task.navigation.label');
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('tms-ui::tasks/task.navigation.group');
-    }
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return __('tms-ui::tasks/task.navigation.group');
+    // }
 
     public static function getNavigationSort(): ?int
     {

@@ -20,8 +20,8 @@ class VehicleModelsTab
                 ->hint(__('tms-ui::inspections/inspection-template.form.fields.templatables.hint'))
                 ->options(function () {
                     return VehicleModel::get()
-                        ->mapWithKeys(fn($vehicle) => [
-                            $vehicle->id => $vehicle->title
+                        ->mapWithKeys(fn($vehicleModel) => [
+                            $vehicleModel->id => $vehicleModel->title
                         ]);
                 })
                 ->searchable()

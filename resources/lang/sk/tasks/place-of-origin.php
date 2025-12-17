@@ -28,7 +28,8 @@ return [
     ],
     'navigation' => [
         'label' => 'Miesta výskytu',
-        'group' => 'Zákazky',
+        // 'group' => 'Zákazky',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Miesto výskytu',

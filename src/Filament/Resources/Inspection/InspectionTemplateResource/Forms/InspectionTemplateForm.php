@@ -19,7 +19,7 @@ class InspectionTemplateForm
     public static function schema(): array
     {
         return [
-            // code 
+            // code
             Forms\Components\TextInput::make('code')
                 ->label(__('tms-ui::inspections/inspection-template.form.fields.code.label'))
                 ->columnSpan(1),
@@ -27,10 +27,14 @@ class InspectionTemplateForm
             Forms\Components\TextInput::make('title')
                 ->label(__('tms-ui::inspections/inspection-template.form.fields.title.label'))
                 ->columnSpan(2),
-            // description 
+            // description
             Forms\Components\TextInput::make('description')
                 ->label(__('tms-ui::inspections/inspection-template.form.fields.description.label'))
-                ->columnSpan(3),
+                ->columnSpan(2),
+            // is periodic
+            Forms\Components\Checkbox::make('is_periodic')
+                ->label(__('tms-ui::inspections/inspection-template.form.fields.is_periodic.label'))
+                ->columnSpan(1),
             // conditions - distance
             Forms\Components\Section::make('')
                 ->columns(1)
@@ -80,7 +84,7 @@ class InspectionTemplateForm
                 ->relationship('groups', 'title')
                 ->columnSpan(2),
 
-            // templatables / vehicle models 
+            // templatables / vehicle models
                 Forms\Components\Tabs::make('Tabs')
                     ->columnSpanFull()
                     ->tabs([

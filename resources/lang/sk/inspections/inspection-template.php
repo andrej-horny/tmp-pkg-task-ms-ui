@@ -97,7 +97,8 @@ return [
     ],
     'navigation' => [
         'label' => 'Typy kontrol',
-        'group' => 'Kontroly',
+        // 'group' => 'Kontroly',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Typy kontrola',

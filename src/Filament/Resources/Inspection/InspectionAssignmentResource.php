@@ -29,15 +29,15 @@ class InspectionAssignmentResource extends Resource
         return __('tms-ui::inspections/inspection.navigation.label');
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('tms-ui::inspections/inspection.navigation.group');
-    }
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return __('tms-ui::inspections/inspection.navigation.group');
+    // }
 
-    public static function getNavigationSort(): ?int
-    {
-        return config('pkg-inspections.navigation.inspection') ?? 999;
-    }
+    // public static function getNavigationSort(): ?int
+    // {
+    //     return config('pkg-inspections.navigation.inspection') ?? 999;
+    // }
 
     // public static function canViewAny(): bool
     // {

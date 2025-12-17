@@ -7,6 +7,8 @@ use Filament\Panel;
 
 // resources
 use Dpb\Package\TaskMS\UI\Filament\Resources;
+use Dpb\UserAdmin\Filament\Pages\ChangePassword;
+use Dpb\UserAdmin\Filament\Pages\UserProfile;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
 

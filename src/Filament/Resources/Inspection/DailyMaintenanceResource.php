@@ -31,15 +31,15 @@ class DailyMaintenanceResource extends Resource
         return __('tms-ui::inspections/daily-maintenance.navigation.label');
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('tms-ui::inspections/daily-maintenance.navigation.group');
-    }
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return __('tms-ui::inspections/daily-maintenance.navigation.group');
+    // }
 
-    public static function getNavigationSort(): ?int
-    {
-        return config('pkg-inspections.navigation.daily-maintenance') ?? 999;
-    }
+    // public static function getNavigationSort(): ?int
+    // {
+    //     return config('pkg-inspections.navigation.daily-maintenance') ?? 999;
+    // }
 
     // public static function canViewAny(): bool
     // {

@@ -35,7 +35,8 @@ return [
     ],
     'navigation' => [
         'label' => 'Skupiny podzákazok',
-        'group' => 'Zákazky',
+        // 'group' => 'Zákazky',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Skupina podzákazky',

@@ -27,7 +27,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Dopravné prevádzky',
-        'group' => 'Flotila',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Dopravná prevádzka',

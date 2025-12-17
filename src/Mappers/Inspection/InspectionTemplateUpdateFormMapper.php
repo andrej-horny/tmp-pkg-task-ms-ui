@@ -2,20 +2,24 @@
 
 namespace Dpb\Package\TaskMS\UI\Mappers\Inspection;
 
+use Dpb\Package\Inspections\Models\InspectionTemplate;
 use Dpb\Package\TaskMS\Commands\InspectionTemplatable\CreateInspectionTemplatableCommand;
+use Dpb\Package\TaskMS\Commands\InspectionTemplatable\UpdateInspectionTemplatableCommand;
 use Dpb\Package\TaskMS\Commands\InspectionTemplate\CreateInspectionTemplateCommand;
+use Dpb\Package\TaskMS\Commands\InspectionTemplate\UpdateInspectionTemplateCommand;
 use Dpb\Package\TaskMS\Resolvers\InspectionTemplatableResolver;
 
-class InspectionTemplateFormMapper
+class InspectionTemplateUpdateFormMapper
 {
     public function __construct(
         private InspectionTemplatableResolver $templatableResolver
     ) {}
 
-    public function fromForm(array $data): array
+    public function fromForm(InspectionTemplate $record, array $data): array
     {
         // create inspection
-        $inspectionTemplateCommand = new CreateInspectionTemplateCommand(
+        $inspectionTemplateCommand = new UpdateInspectionTemplateCommand(
+            $record->id,
             $data['code'],
             $data['title'],
             $data['description'] ?? null,
@@ -31,10 +35,10 @@ class InspectionTemplateFormMapper
         // create inspection templatables
         // dd($data['templatables']);
         $templatablesCommands = collect($data['templatables'] ?? [])
-            ->map(function ($templatableId) {
+            ->map(function ($templatableId) use ($record) {
                 $templatable = $this->templatableResolver->resolve('vehicle-model', $templatableId);
-                return new CreateInspectionTemplatableCommand(
-                    null,
+                return new UpdateInspectionTemplatableCommand(
+                    $record->id,
                     $templatable->id,
                     $templatable->morphClass
                 );
@@ -42,7 +46,7 @@ class InspectionTemplateFormMapper
             ->all();
 
         return [
-            'inspectionCommand' => $inspectionTemplateCommand,
+            'inspectionTemplateCommand' => $inspectionTemplateCommand,
             'templatablesCommands'  => $templatablesCommands
         ];
     }

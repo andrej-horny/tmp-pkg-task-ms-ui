@@ -30,7 +30,8 @@ return [
     ],
     'navigation' => [
         'label' => 'Skupiny zákazok',
-        'group' => 'Zákazky',
+        // 'group' => 'Zákazky',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Skupina zákazky',

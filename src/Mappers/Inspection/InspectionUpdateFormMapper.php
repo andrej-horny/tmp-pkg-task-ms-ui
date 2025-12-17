@@ -11,10 +11,12 @@ use Dpb\Package\TaskMS\States;
 use Dpb\Package\Tasks\Models\PlaceOfOrigin;
 use Dpb\Package\Fleet\Models\Vehicle;
 use Dpb\Package\TaskMS\Models\InspectionAssignment;
+use Dpb\Package\TaskMS\Resolvers\InspectionSubjectResolver;
 
 class InspectionUpdateFormMapper
 {
     public function __construct(
+        private InspectionSubjectResolver $inspectionSubjectResolver
     ) {}
 
     public function fromForm(InspectionAssignment $record, array $data): array
@@ -28,12 +30,13 @@ class InspectionUpdateFormMapper
         );
 
         // create inspection assignment
-        $subject = Vehicle::find($data['subject_id'])->first();
+        // $subject = Vehicle::find($data['subject_id'])->first();
+        $subject = $this->inspectionSubjectResolver->resolve('vehicle', $data['subject_id']);
         $inspectionAssignmentCommand = new UpdateInspectionAssignmentCommand(
             $record->id,
             $record->inspection->id,
             $subject->id,
-            $subject->getMorphClass(),
+            $subject->morphClass,
         );
 
         return [

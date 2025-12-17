@@ -37,14 +37,14 @@ class PlaceOfOriginResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-tasks.navigation.place-of-origin') ?? 999;
+        return config('pkg-task-ms-ui.navigation.place-of-origin') ?? 999;
     }
 
     // public static function canViewAny(): bool
     // {
     //     return auth()->user()->can('tasks.place-of-origin.read');
     // }
-    
+
     public static function form(Form $form): Form
     {
         return PlaceOfOriginForm::make($form);
@@ -52,7 +52,7 @@ class PlaceOfOriginResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return PlaceOfOriginTable::make($table); 
+        return PlaceOfOriginTable::make($table);
     }
 
     public static function getRelations(): array

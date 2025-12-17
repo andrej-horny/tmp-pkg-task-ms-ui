@@ -25,7 +25,8 @@ return [
     ],
     'navigation' => [
         'label' => 'Typy udalostí',
-        'group' => 'Udalosti',
+        // 'group' => 'Udalosti',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Typ udalosti',

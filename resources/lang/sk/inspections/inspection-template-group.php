@@ -29,7 +29,8 @@ return [
     ],
     'navigation' => [
         'label' => 'Typy údržby',
-        'group' => 'Kontroly',
+        // 'group' => 'Kontroly',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Typ údržby',

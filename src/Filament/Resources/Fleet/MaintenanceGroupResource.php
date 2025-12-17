@@ -36,7 +36,7 @@ class MaintenanceGroupResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('pkg-fleet.navigation.maintenance-group') ?? 999;
+        return config('pkg-task-ms-ui.navigation.maintenance-group') ?? 999;
     }
 
     // public static function canViewAny(): bool
@@ -71,11 +71,11 @@ class MaintenanceGroupResource extends Resource
     // public static function canEdit(Model $record): bool
     // {
     //     return auth()->check() && auth()->user()->can('fleet.maintenance-group.update');
-    // }   
-    
+    // }
+
     // public static function canDelete(Model $record): bool
-    // {        
+    // {
     //     return auth()->check() && auth()->user()->can('fleet.maintenance-group.delete');
-    // }    
+    // }
 
 }

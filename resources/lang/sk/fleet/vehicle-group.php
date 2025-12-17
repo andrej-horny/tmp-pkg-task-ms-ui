@@ -27,7 +27,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Skupiny vozidiel',
-        'group' => 'Flotila',
+        'group' => 'Číselníky',
     ],
     'resource' => [
         'model_label' => 'Skupina vozidiel',

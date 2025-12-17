@@ -48,7 +48,7 @@ return [
     ],
     'navigation' => [
         'label' => 'Denné ošetrenie',
-        'group' => 'Kontroly',
+        // 'group' => 'Kontroly',
     ],
     'resource' => [
         'model_label' => 'Denné ošetrenie',
