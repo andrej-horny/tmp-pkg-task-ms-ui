@@ -60,11 +60,11 @@ class InspectionAssignmentTable
             ])
             ->filters(InspectionAssignmentTableFilters::make())
             ->headerActions([
-                Tables\Actions\Action::make('gg')
+                // Tables\Actions\Action::make('gg')
 
-                ->action(function(InspectionPlannerService $svc) {
-                    $svc->execute();
-                }),
+                // ->action(function(InspectionPlannerService $svc) {
+                //     $svc->execute();
+                // }),
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
